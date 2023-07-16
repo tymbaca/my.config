@@ -67,6 +67,7 @@ alias t="tmux"
 alias g="git"
 alias ta="tmux attach"
 alias td="tmux detach"
+alias tat="tmux attach -t"
 alias cgit='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias cg='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias f="cd \$(find . -type d -print | fzf)"
