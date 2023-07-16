@@ -53,6 +53,7 @@ alias ip="ipython"
 alias swagger-editor="docker run -p 80:8080 swaggerapi/swagger-editor:v5.0.0-alpha.63-unprivileged"
 alias treee="tree -L 3"
 alias zshrc="\$EDITOR \$HOME/.zshrc"
+alias shrc="\$EDITOR \$HOME/.zshrc"
 alias zshrc-reload="source \$HOME/.zshrc"
 alias profile="\$EDITOR \$HOME/.profile"
 alias emacs="/usr/local/bin/emacs"
@@ -65,9 +66,13 @@ alias bat="batcat"
 alias cat="batcat -p"
 alias c="clear"
 alias t="tmux"
+alias g="git"
 alias ta="tmux attach"
 alias td="tmux detach"
-alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias cgit='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias cg='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+alias f="cd \$(find . -type d -print | fzf)"
+alias ff="cd \$(find * -type d -print | fzf)"
 
 function v() {
   $EDITOR ${1:-.}
