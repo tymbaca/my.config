@@ -70,7 +70,9 @@ alias td="tmux detach"
 alias cgit='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias cg='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias f="cd \$(find . -type d -print | fzf)"
-alias ff="cd \$(find * -type d -print | fzf)"
+alias fa="cd \$(find * -type d -print | fzf)"
+alias ff="cd \$(find . -print | fzf)"
+alias faf="cd \$(find * -print | fzf)"
 
 # Add bat aliases if bat installed at name "batcat"
 if ! command -v bat &> /dev/null
