@@ -62,8 +62,6 @@ alias egp="echo \$GOPATH"
 alias dcp="docker-compose"
 alias gd="git diff | bat"
 alias ds="du -hs"
-alias bat="batcat"
-alias cat="batcat -p"
 alias c="clear"
 alias t="tmux"
 alias g="git"
@@ -73,6 +71,15 @@ alias cgit='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias cg='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias f="cd \$(find . -type d -print | fzf)"
 alias ff="cd \$(find * -type d -print | fzf)"
+
+# Add bat aliases if bat installed at name "batcat"
+if ! command -v bat &> /dev/null
+then
+    alias bat="batcat"
+    alias cat="batcat -p"
+else
+    alias cat="bat -p"
+fi
 
 function v() {
   $EDITOR ${1:-.}
