@@ -6,6 +6,7 @@ export PATH=$HOME/go/bin:$PATH
 export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME~/.local/bin:$PATH
+export PATH="/Users/tymbaca/.local/bin:$PATH"
 source "$HOME/.cargo/env"
 
 # Path to your oh-my-zsh installation.
