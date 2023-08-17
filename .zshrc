@@ -7,7 +7,10 @@ setopt extendedglob
 ZSH_THEME="robbyrussell"
 
 
-plugins=(git)
+plugins=(
+    git
+    poetry
+)
 
 # User configuration
 
@@ -61,6 +64,7 @@ alias e="emacsclient -c -a 'emacs'"
 alias egp="echo \$GOPATH"
 alias dcp="docker-compose"
 alias gd="git diff | bat"
+alias gdc="git diff --cached | bat"
 alias ds="du -hs"
 alias c="clear"
 alias t="tmux"
