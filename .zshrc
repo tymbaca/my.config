@@ -67,18 +67,23 @@ alias gd="git diff | bat"
 alias gdc="git diff --cached | bat"
 alias ds="du -hs"
 alias c="clear"
-alias t="tmux"
-alias g="git"
+
+alias t="tmux attach -t \$(tmux ls -F\#S | fzf)"
 alias ta="tmux attach"
 alias td="tmux detach"
 alias tat="tmux attach -t"
-alias tn="tmux new-session"
+alias tn="tmux new-session -s \$(basename \$PWD)"
+
+alias g="git"
 alias cgit='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
 alias cg='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+
 alias f="cd \$(find . -type d -print | fzf)"
+alias fp="cd \$(find ~/code -type d -print | fzf)"
 alias fa="cd \$(find * -type d -print | fzf)"
 alias ff="cd \$(find . -print | fzf)"
 alias faf="cd \$(find * -print | fzf)"
+
 
 # Add bat aliases if bat installed at name "batcat"
 if ! command -v bat &> /dev/null
