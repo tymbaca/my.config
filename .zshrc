@@ -84,6 +84,9 @@ alias fa="cd \$(find * -type d -print | fzf)"
 alias ff="cd \$(find . -print | fzf)"
 alias faf="cd \$(find * -print | fzf)"
 
+alias ports="lsof -i -P -n | grep LISTEN"
+
+alias gr="go run main.go"
 
 # Add bat aliases if bat installed at name "batcat"
 if ! command -v bat &> /dev/null
@@ -122,3 +125,8 @@ then
 else
     eval "$(jump shell zsh)"
 fi
+
+# Go mod init with github
+ginit() {
+    go mod init $GITPROF/${1}
+}
