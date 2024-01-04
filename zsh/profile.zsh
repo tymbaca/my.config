@@ -1,3 +1,11 @@
+MYDIR="$(dirname "$(realpath "$0")")"
+
+export EDITOR=nvim
+export VISUAL="$EDITOR"
+
+# Added by Toolbox App
+export PATH="$PATH:/usr/local/bin"
+
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -7,16 +15,9 @@ export PATH=$HOME/.config/emacs/bin:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
 export PATH=$HOME~/.local/bin:$PATH
 export PATH="/Users/tymbaca/.local/bin:$PATH"
-source "$HOME/.cargo/env"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-
-
-export TERMINAL="open -a iTerm ."
-export EDITOR=nvim
-export VISUAL="$EDITOR"
-
 
 # GO
 export GOPATH="$HOME/code/go"
@@ -29,6 +30,6 @@ export JAVA_HOME="/Users/tigranrostoman/Library/Caches/Coursier/arc/https/github
 # >>> coursier install directory >>>
 export PATH="$PATH:/Users/tigranrostoman/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
-source "$HOME/.cargo/env"
+#source "$HOME/.cargo/env"
 
 export GITPROF="github.com/tymbaca"
