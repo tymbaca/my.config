@@ -1,2 +1,4 @@
-nvim
+*
+!zsh
+!tmux
 tmux/plugins
