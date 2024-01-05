@@ -9,6 +9,7 @@ fi
 # System
 alias zshrc="\$EDITOR \$ZSHRC_DIR"
 alias treee="tree -L 3"
+alias T="tree -L 3"
 alias ds="du -hs"
 alias c="clear"
 alias ports="lsof -i -P -n | grep LISTEN"
