@@ -9,7 +9,7 @@ fi
 # System
 alias zshrc="\$EDITOR \$ZSHRC_DIR"
 alias treee="tree -L 3"
-alias T="tree -L 3"
+alias T="tree -L 3 --dirsfirst -a"
 alias ds="du -hs"
 alias c="clear"
 alias ports="lsof -i -P -n | grep LISTEN"
@@ -27,6 +27,7 @@ alias dcp="docker-compose"
 
 # Git
 alias g="git"
+alias gg="git commit -m "
 alias gd="git diff | bat"
 alias gdd="git diff --cached | bat"
 alias gs="git status"
