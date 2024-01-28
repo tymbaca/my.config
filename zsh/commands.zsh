@@ -27,7 +27,8 @@ alias dcp="docker-compose"
 
 # Git
 alias g="git"
-alias gg="git commit -m "
+alias gg="git commit"
+alias gc="git checkout"
 alias gd="git diff | bat"
 alias gdd="git diff --cached | bat"
 alias gs="git status"
