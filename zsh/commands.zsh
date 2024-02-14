@@ -22,15 +22,19 @@ if [ -f .env ]; then
 fi
 }
 
+function slog() {
+    ${1} &> /dev/stdout | loggo stream -t *loggo.yaml
+}
+
 # Other
 alias dcp="docker-compose"
 
 # Git
 alias g="git"
-alias gg="git commit"
-alias gc="git checkout"
+alias gch="git checkout"
 alias gd="git diff | bat"
 alias gdd="git diff --cached | bat"
+alias gD="git diff @~..@"
 alias gs="git status"
 alias gl="git log"
 alias gp="git push"
