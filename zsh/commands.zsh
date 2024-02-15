@@ -1,3 +1,4 @@
+setopt aliases
 
 # Add bat aliases if bat installed at name "batcat"
 if ! command -v bat &> /dev/null
@@ -23,7 +24,22 @@ fi
 }
 
 function slog() {
-    ${1} &> /dev/stdout | loggo stream -t *loggo.yaml
+    if [[ -d *loggo.yaml ]] 
+    then
+        ${1} &> /dev/stdout | loggo stream -t *loggo.yaml
+    else
+        ${1} &> /dev/stdout | loggo stream 
+    fi
+}
+
+function podlog() {
+    if [ -z $1 ]; then
+        echo "error: please provide namespace where pods are placed"
+        return 1
+    fi
+
+    pod=$(kubectl get pods -o name -n $1 | fzf)
+    kubectl logs $pod -n $1 | loggo stream
 }
 
 # Other
@@ -68,3 +84,4 @@ alias ip="ipython"
 function av() {
   source ${1:-venv}/bin/activate
 }
+
