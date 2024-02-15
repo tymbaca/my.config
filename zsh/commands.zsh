@@ -32,14 +32,78 @@ function slog() {
     fi
 }
 
-function podlog() {
+# utility funcs
+
+function check-ns() {
     if [ -z $1 ]; then
-        echo "error: please provide namespace where pods are placed"
+        echo "error: please provide namespace where pods are placed" >&2
         return 1
     fi
+}
 
-    pod=$(kubectl get pods -o name -n $1 | fzf)
-    kubectl logs $pod -n $1 | loggo stream
+function select-ns() {
+    echo $kubenamespaces | tr ' ' '\n' | fzf
+}
+
+function try-ns() {
+    if [ -z $1 ]; then
+        select-ns
+    else
+        echo $1
+    fi
+}
+
+# user commands
+
+function podlist() {
+    ns=$(try-ns $1)
+    kubectl get pods -o name -n "$ns"
+}
+
+function podlog() {
+    ns=$(try-ns $1)
+
+    pod=$(podselect $ns)
+    kubectl logs $pod -n $ns | loggo stream
+}
+
+function podexec() {
+    1=$(try-ns $1)
+
+    pod=$(podselect $1)
+    kubectl exec -n $1 --stdin --tty $pod -- ${@:2}
+}
+
+function podselect() {
+    ns=$(try-ns $1)
+
+    echo $(kubectl get pods -o name -n $ns | fzf)
+}
+
+kubenamespaces="logisticcloud logistic-tariff"
+cmds="logs pods sh bash"
+
+function kube() {
+    ns=$(select-ns)
+    cmd=$(echo $cmds | tr ' ' '\n' | fzf)
+    # echo $ns $cmd
+    case $cmd in 
+        "logs")
+            podlog $ns
+            ;;
+
+        "pods")
+            podlist $ns
+            ;;
+
+        "sh")
+            podexec $ns sh
+            ;;
+
+        "bash")
+            podexec $ns bash
+            ;;
+    esac
 }
 
 # Other
