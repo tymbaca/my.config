@@ -112,6 +112,7 @@ function kube() {
 
 # Other
 alias dcp="docker-compose"
+alias drm="docker ps --all | awk '(NR>1){print}' | fzf | awk '{print $1}' | xargs -I {} docker rm -f {}"
 
 # Git
 alias g="git"
