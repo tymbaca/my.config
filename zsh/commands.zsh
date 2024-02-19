@@ -14,6 +14,10 @@ alias T="tree -L 3 --dirsfirst -a"
 alias ds="du -hs"
 alias c="clear"
 alias ports="lsof -i -P -n | grep LISTEN"
+function untar() {
+    tar -xf ${1} --one-top-level
+}
+
 function v() {
   $EDITOR ${1:-.}
 }
