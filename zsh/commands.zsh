@@ -113,6 +113,10 @@ function kube() {
 # Other
 alias dcp="docker-compose"
 alias drm="docker ps --all | awk '(NR>1){print}' | fzf | awk '{print $1}' | xargs -I {} docker rm -f {}"
+#macro to kill the docker desktop app and the VM (excluding vmnetd -> it's a service)
+function kdo() {
+    ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
+}
 
 # Git
 alias g="git"
