@@ -116,7 +116,15 @@ alias drm="docker ps --all | awk '(NR>1){print}' | fzf | awk '{print $1}' | xarg
 
 # Git
 alias g="git"
-alias gch="git checkout"
+# alias gch="git checkout"
+function gch {
+    if [ -z $1 ]; then
+        git branch | awk '!/\*/{print}' | fzf | xargs -I {} git checkout {}
+    else
+        git checkout ${@:1}
+    fi
+}
+
 alias gd="git diff | bat"
 alias gdd="git diff --cached | bat"
 alias gD="git diff @~..@"
