@@ -17,6 +17,7 @@ alias ports="lsof -i -P -n | grep LISTEN"
 function untar() {
     tar -xf ${1} --one-top-level
 }
+alias cd="z"
 
 function v() {
   $EDITOR ${1:-.}
@@ -30,10 +31,16 @@ fi
 function slog() {
     if [[ -d *loggo.yaml ]] 
     then
-        ${1} &> /dev/stdout | loggo stream -t *loggo.yaml
+        ${@:1} &> /dev/stdout | loggo stream -t *loggo.yaml
     else
-        ${1} &> /dev/stdout | loggo stream 
+        ${@:1} &> /dev/stdout | loggo stream 
     fi
+}
+
+function replacespaces() {
+    for file in *' '*; do
+      mv -- "$file" "${file// /_}"
+    done
 }
 
 # utility funcs
@@ -84,14 +91,21 @@ function podselect() {
     echo $(kubectl get pods -o name -n $ns | fzf)
 }
 
-kubenamespaces="logisticcloud logistic-tariff"
-cmds="logs pods sh bash"
+function clusterselect() {
+    tsh kube ls | awk 'NR>2{print $1}' | fzf | xargs -I {} tsh kube login {}
+}
+
+kubenamespaces="logisticcloud logistic-tariff logistic-route"
+cmds="logs pods clusters sh bash"
 
 function kube() {
     ns=$(select-ns)
     cmd=$(echo $cmds | tr ' ' '\n' | fzf)
     # echo $ns $cmd
     case $cmd in 
+        "clusters")
+            clusterselect
+            ;;
         "logs")
             podlog $ns
             ;;
@@ -111,6 +125,7 @@ function kube() {
 }
 
 # Other
+alias vv="nvim --listen /tmp/godot.pipe"
 alias dcp="docker-compose"
 alias drm="docker ps --all | awk '(NR>1){print}' | fzf | awk '{print $1}' | xargs -I {} docker rm -f {}"
 #macro to kill the docker desktop app and the VM (excluding vmnetd -> it's a service)
@@ -119,7 +134,6 @@ function kdo() {
 }
 
 # Git
-alias g="git"
 # alias gch="git checkout"
 function gch {
     if [ -z $1 ]; then
@@ -161,7 +175,7 @@ ginit() {
 # Python
 alias p3="python3"
 alias p="python"
-alias ip="ipython"
+# alias ip="ipython"
 function av() {
   source ${1:-venv}/bin/activate
 }

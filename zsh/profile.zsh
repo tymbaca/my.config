@@ -6,6 +6,7 @@ export VISUAL="$EDITOR"
 # Added by Toolbox App
 export PATH="$PATH:/usr/local/bin"
 
+export TERM="xterm-256color"
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -31,6 +32,7 @@ export JAVA_HOME="/Users/tigranrostoman/Library/Caches/Coursier/arc/https/github
 # >>> coursier install directory >>>
 export PATH="$PATH:/Users/tigranrostoman/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
-#source "$HOME/.cargo/env"
 
 export GITPROF="github.com/tymbaca"
+
+source $HOME/.cargo/env
