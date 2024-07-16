@@ -1,10 +1,10 @@
 setopt aliases
 
 # Add bat aliases if bat installed at name "batcat"
-if ! command -v bat &> /dev/null
-then
-    alias bat="batcat"
-fi
+# if ! command -v bat &> /dev/null
+# then
+#     alias bat="batcat"
+# fi
 
 
 # System
@@ -75,7 +75,7 @@ function podlog() {
     ns=$(try-ns $1)
 
     pod=$(podselect $ns)
-    kubectl logs $pod -n $ns | loggo stream
+    kubectl logs -f $pod -n $ns | loggo stream
 }
 
 function podexec() {
@@ -135,8 +135,9 @@ function kdo() {
 }
 
 # Git
-# alias gch="git checkout"
-function gch {
+alias g="git"
+alias gch="git checkout"
+function gchh {
     if [ -z $1 ]; then
         git branch -a | awk '!/\*/{print}' | fzf | xargs -I {} git checkout {}
     else
