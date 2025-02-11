@@ -8,6 +8,8 @@ setopt aliases
 
 
 # System
+alias mp=multipass
+alias lt="ls -ltr"
 alias zshrc="\$EDITOR \$ZSHRC_DIR"
 alias treee="tree -L 3"
 alias T="tree -L 3 --dirsfirst -a"
@@ -20,8 +22,17 @@ function untar() {
 alias cd="z"
 
 function v() {
-  $EDITOR ${1:-.}
+  if [ $EDITOR = "neovide" ]; then
+    $EDITOR ${1:-.} &
+  else
+    $EDITOR ${1:-.}
+  fi
 }
+
+function vd() {
+  neovide ${1:-.} &
+}
+
 dotenv() {
 if [ -f .env ]; then
   export $(echo $(cat .env | sed 's/#.*//g'| xargs) | envsubst)
@@ -91,12 +102,27 @@ function podselect() {
     echo $(kubectl get pods -o name -n $ns | fzf)
 }
 
+function podrestart() {
+    if [ -z $1 ]; then
+        echo "specify deployment name"
+        exit 1
+    fi
+
+    ns=$(try-ns $2)
+
+    kubectl rollout restart deployment $1 -n $ns
+}
+
 function clusterselect() {
     tsh kube ls | awk 'NR>2{print $1}' | fzf | xargs -I {} tsh kube login {}
 }
 
-kubenamespaces="logisticcloud logistic-tariff logistic-route"
+kubenamespaces="logisticcloud logistic-tariff logistic-route wb-drive logistics"
 cmds="logs pods clusters sh bash"
+
+function kube-delete-deployment() {
+    kubectl get deployments | awk 'NR>1{print $1}' | fzf | xargs -I {} kubectl delete deployment/{}
+}
 
 function kube() {
     ns=$(select-ns)
@@ -124,11 +150,35 @@ function kube() {
     esac
 }
 
+alias k=kubectl
+
+
+# HOLODILNIK
+function hldlogs-dev() {
+    hldlogs $HLD_DEV_HOST $1 $2
+}
+
+function hldlogs-stage() {
+    hldlogs $HLD_STAGE_HOST $1 $2
+}
+
+function hldlogs() {
+    host=$1
+    service=$2
+    if [ $# -eq 3 ]; then
+        tail="--tail $3"
+    fi
+    sshpass -p $HLD_PASSWORD ssh $HLD_USER@$host "sudo docker ps" | awk -v service_var="$service" '$2 ~ 'service_var' {print $1}' | xargs -I {} sshpass -p $HLD_PASSWORD ssh $HLD_USER@$host "sudo docker logs $tail -f {}" | hl
+}
+
 # Other
 alias vv="nvim --listen /tmp/godot.pipe"
 alias dcp="docker-compose"
 alias drm="docker ps --all | awk '(NR>1){print}' | fzf | awk '{print $1}' | xargs -I {} docker rm -f {}"
 alias ts="task"
+function hex() {
+    hexyl $1 | less
+}
 #macro to kill the docker desktop app and the VM (excluding vmnetd -> it's a service)
 function kdo() {
     ps ax | grep -i docker | egrep -iv 'grep|com.docker.vmnetd' | awk '{print $1}' | xargs kill
@@ -136,14 +186,17 @@ function kdo() {
 
 # Git
 alias g="git"
-alias gch="git checkout"
-function gchh {
-    if [ -z $1 ]; then
-        git branch -a | awk '!/\*/{print}' | fzf | xargs -I {} git checkout {}
-    else
-        git checkout ${@:1}
-    fi
-}
+alias gw="git switch"
+alias gwd="git switch --detach"
+# alias gch="git checkout"
+# function gch {
+#     if [ -z $1 ]; then
+#         git branch -a | awk '!/\*/{print}' | fzf | xargs -I {} git checkout {}
+#     else
+#         git checkout ${@:1}
+#     fi
+# }
+alias gww='git branch --sort=-committerdate | grep -v "^\*" |fzf --height=20% --reverse --info=inline | xargs git switch'
 
 function cc {
     if [ -z $1 ]; then
@@ -154,8 +207,8 @@ function cc {
     git push
 }
 
-alias gd="git diff | bat"
-alias gdd="git diff --cached | bat"
+alias gd="git diff"
+alias gdd="git diff --cached"
 alias gD="git diff @~..@"
 alias gs="git status"
 alias gl="git log"

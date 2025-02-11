@@ -1,3 +1,6 @@
+autoload -Uz compinit
+compinit
+
 MYDIR="$(dirname "$(realpath "$0")")"
 export ZSHRC_DIR=$MYDIR
 export ZSHRC="$ZSHRC_DIR/init.zsh"
