@@ -152,6 +152,13 @@ function kube() {
 
 alias k=kubectl
 
+function hldssh-dev() {
+    sshpass -p $HLD_PASSWORD ssh $HLD_USER@$HLD_DEV_HOST
+}
+
+function hldssh-stage() {
+    sshpass -p $HLD_PASSWORD ssh $HLD_USER@$HLD_STAGE_HOST
+}
 
 # HOLODILNIK
 function hldlogs-dev() {
