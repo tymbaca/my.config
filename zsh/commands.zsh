@@ -151,6 +151,7 @@ function kube() {
 }
 
 alias k=kubectl
+alias mk=minikube
 
 function hldssh-dev() {
     sshpass -p $HLD_PASSWORD ssh $HLD_USER@$HLD_DEV_HOST
@@ -204,6 +205,7 @@ alias gwd="git switch --detach"
 #     fi
 # }
 alias gww='git branch --sort=-committerdate | grep -v "^\*" |fzf --height=20% --reverse --info=inline | xargs git switch'
+alias gca="git commit --amend"
 
 function cc {
     if [ -z $1 ]; then
