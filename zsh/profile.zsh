@@ -35,7 +35,7 @@ export PATH="$PATH:/Users/tigranrostoman/Library/Application Support/Coursier/bi
 
 export GITPROF="github.com/tymbaca"
 
-source $HOME/.cargo/env
+# source $HOME/.cargo/env
 
 # HLD
 export HLD_STAGE_HOST=P0417233002L01.adeal.ru
